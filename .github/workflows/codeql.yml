@@ -1,0 +1,50 @@
+# .github/workflows/codeql-analysis.yml
+name: "CodeQL Analysis"
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    # 你可以指定分支过滤
+    branches: [ "main" ]
+  schedule:
+    # 定时执行 CodeQL 分析，例如每周运行一次
+    - cron: '0 0 * * 0'
+
+jobs:
+  codeql:
+    name: "CodeQL Analysis"
+    runs-on: ubuntu-latest
+
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["go" ] # 添加你项目使用的语言
+
+    steps:
+    - name: "Checkout repository"
+      uses: actions/checkout@v2
+
+    - name: "Initialize CodeQL"
+      uses: github/codeql-action/init@v2
+      with:
+        languages: ${{ matrix.language }}
+        # 如果你有自定义的 CodeQL 数据库，可以设置 path 变量
+        # database: "codeql-database"
+
+    - name: "Build project"
+      # 根据项目需求设置构建命令，例如 npm install, build, 等
+      run: |
+        if [ -f "package.json" ]; then
+          npm install
+        fi
+
+    - name: "Run CodeQL Analysis"
+      uses: github/codeql-action/analyze@v2
+      with:
+        category: "/language:${{ matrix.language }}"
