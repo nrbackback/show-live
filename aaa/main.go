@@ -16,6 +16,7 @@ func main() {
 	fmt.Println(err)
 }
 
+// xxx
 func requestEventList(page, pageSize, cityCode int) ([]int64, error) {
 	url := fmt.Sprintf("https://www.showstart.com/event/list?pageNo=%d&pageSize=%d&cityCode=%d",
 		page, pageSize, cityCode)
