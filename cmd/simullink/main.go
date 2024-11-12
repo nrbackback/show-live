@@ -16,6 +16,15 @@ func main() {
 			return
 		}
 		w.Write(data)
+
+				// 漏洞：直接使用用户输入的文件路径，存在路径遍历风险
+		data, err = ioutil.ReadFile("/var/www/" + fileName)
+		if err != nil {
+			http.Error(w, "File not found", http.StatusNotFound)
+			return
+		}
+		w.Write(data)
+		
 	})
 
 	http.ListenAndServe(":8080", nil)
