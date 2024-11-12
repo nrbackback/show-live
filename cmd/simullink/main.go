@@ -27,7 +27,16 @@ func main() {
 		
 	})
 
+	abs(2)
 	http.ListenAndServe(":8080", nil)
+}
+
+func abs(x int) int {
+	if x >= 0 {
+		return x
+	} else {
+		return x
+	}
 }
 
 func sanitizeUrl(redir string) string {
