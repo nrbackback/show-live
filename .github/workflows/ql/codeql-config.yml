@@ -1,0 +1,2 @@
+exclude:
+  - "go/path-injection"     # 示例：排除 Java 的不安全反序列化规则
